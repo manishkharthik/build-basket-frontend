@@ -18,6 +18,7 @@ const ALL_ATTRS = [
   "Efficiency",
   "Impact"
 ];
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
 export default function PlayerComparatorPage() {
   /* -----------------------------
@@ -40,7 +41,7 @@ export default function PlayerComparatorPage() {
      Initial data load
   ----------------------------- */
   useEffect(() => {
-    fetch("http://localhost:8080/api/players")
+    fetch(`${apiUrl}/api/players`)
       .then(res => res.json())
       .then(setPlayers)
       .catch(() => setPlayers([]));
@@ -67,7 +68,7 @@ export default function PlayerComparatorPage() {
     setResult(null);
 
     try {
-      const res = await fetch("http://localhost:8080/api/compare", {
+      const res = await fetch(`${apiUrl}/api/compare`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

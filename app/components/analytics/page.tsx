@@ -23,6 +23,8 @@ interface PlayerAnalyticsDTO {
   impact: number;
 }
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+
 export const ARCHETYPE_BADGE_STYLE: Record<number, { bg: string; text: string }> = {
   0: { bg: "bg-blue-800/20", text: "text-blue-300" },     // Low Usage Playmaker
   1: { bg: "bg-violet-800/20", text: "text-violet-300" }, // Secondary Scorer
@@ -110,8 +112,8 @@ const AnalyticsPage: React.FC = () => {
         }
 
         const queryString = new URLSearchParams(queryParams).toString();
-        console.log(`http://localhost:8080/api/players/analytics?${queryString}`)
-        const response = await fetch(`http://localhost:8080/api/players/analytics?${queryString}`);
+        console.log(`${apiUrl}/api/players/analytics?${queryString}`);
+        const response = await fetch(`${apiUrl}/api/players/analytics?${queryString}`);
         if (!response.ok) {
           throw new Error('Failed to fetch player data');
         }

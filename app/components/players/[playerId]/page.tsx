@@ -11,6 +11,7 @@ import RadarComparisonView from "./bottom/RadarComparisonView";
 import { PlayerSummary, CurrentAttributes, ProjectedAttributes, DisplayAttributes, AttributePercentiles, ProjectedAttributePercentiles } from "@/app/types/player";
 
 type BottomTab = "progression" | "radar";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
 export default function PlayerPage({
   params,
@@ -31,11 +32,11 @@ export default function PlayerPage({
 
     useEffect(() => {
       Promise.all([
-        fetch(`http://localhost:8080/api/players`).then(r => r.json()),
-        fetch(`http://localhost:8080/api/players/${playerId}/attributes/current`).then(r => r.json()),
-        fetch(`http://localhost:8080/api/players/${playerId}/attributes/projected`).then(r => r.json()),
-        fetch(`http://localhost:8080/api/players/${playerId}/attributes/percentiles/current`).then(r => r.json()),
-        fetch(`http://localhost:8080/api/players/${playerId}/attributes/percentiles/projected`).then(r => r.json()),
+        fetch(`${apiUrl}/api/players`).then(r => r.json()),
+        fetch(`${apiUrl}/api/players/${playerId}/attributes/current`).then(r => r.json()),
+        fetch(`${apiUrl}/api/players/${playerId}/attributes/projected`).then(r => r.json()),
+        fetch(`${apiUrl}/api/players/${playerId}/attributes/percentiles/current`).then(r => r.json()),
+        fetch(`${apiUrl}/api/players/${playerId}/attributes/percentiles/projected`).then(r => r.json()),
       ]).then(([players, current, projected, currPercentiles, projPercentiles]) => {
         const selectedPlayer = players.find(
           (p: PlayerSummary) => String(p.playerId) === String(playerId)

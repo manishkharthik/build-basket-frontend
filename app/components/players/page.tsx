@@ -9,14 +9,14 @@ interface Player {
   teamAbbr: string;
   age: number;
 }
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 export default function PlayersPage() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [query, setQuery] = useState("");
   const router = useRouter();
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/players")
+    fetch(`${apiUrl}/api/players`)
       .then(res => res.json())
       .then((data: Player[]) => {
 
